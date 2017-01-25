@@ -17,10 +17,7 @@ def start(bot, update):
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
 
+
 # init
 if __name__ == "__main__":
     updater.start_polling()
-
-
-
-# some test shit
