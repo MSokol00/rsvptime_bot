@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
-if [ -z "$(pidof python /home/MSokol00/Projects/telegram.rsvptime_bot/bot.py)" ]
-then
-    python /home/MSokol00/Projects/telegram.rsvptime_bot/cron_startCMD.sh
-fi
+
+case "$(ps aux | grep telegram.rsvptime_bot/bot.py | wc -l)" in
+
+1)  echo "Restarting Amadeus:     $(date)" >> /var/log/telegram.rsvptime_bot.txt
+    python /home/MSokol00/Projects/telegram.rsvptime_bot/bot.py &
+    echo "restarting"
+    ;;
+2)  # all ok
+    echo "All ok"
+    ;;
+esac;
