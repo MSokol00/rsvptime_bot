@@ -1,12 +1,10 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 ### What is this repository for? ###
 
 * Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+RSVPtime telegram bot for RSVP with supposed time of arrival
+* Version 0.0.1
 
 ### How do I get set up? ###
 
@@ -25,5 +23,4 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Who do I talk to? ###
 
-* Repo owner or admin
-* Other community or team contact
+* Repo owner or admin: sokolowski.marcin@me.com, telegram: MSokol00
