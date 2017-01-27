@@ -18,6 +18,12 @@ start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
 
 
+def krystian(bot, update):
+    bot.sendMessage(chat_id=update.message.chat_id, text="Krystian is pussy who uses cheats (like TriggerBot, WH and, of course, AimBot, to pretend, that he's somewhat better in CS than rest of his team")
+
+start_handler = CommandHandler('Krystian', start)
+dispatcher.add_handler(start_handler)
+
 # init
 if __name__ == "__main__":
     updater.start_polling()
