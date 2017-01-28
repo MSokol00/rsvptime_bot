@@ -1,6 +1,15 @@
 #!/usr/bin/python
 import mysql
 
+## some func
+def makeUserDic(update):
+    user = {'first_name': update.message.from_user.first_name, 'last_name': update.message.from_user.last_name,
+            'username': update.message.from_user.username, 'user_id': update.message.from_user.id}
+    return user
+
+
+## handlers
+
 def start(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
 
@@ -38,6 +47,15 @@ def close(bot, update):
 
     bot.sendMessage(chat_id=chat_id, text=text)
 
-def list(bot, update):
+def willattend(bot, update, args):
+    #TODO implement fime functionality, for now args not in use and time populated with NULL value
     chat_id = update.message.chat_id
-    exit
+    exists = mysql.check_list_existence(chat_id)
+    if exists == True:
+        user = makeUserDic(update)
+        mysql.attend(chat_id,user,answer='will')
+        text = "{} {} will attend!".format(user['first_name'],user['last_name'])
+    else:
+        text = "There is no list to attend! Create one with /make"
+
+    bot.sendMessage(chat_id=chat_id, text=text)
