@@ -3,7 +3,7 @@ import mysql
 
 ## some func
 def makeUserDic(update):
-    user = {'first_name': update.message.from_user.first_name, 'last_name': update.message.from_user.last_name,
+    user = {'first_name': update.message.from_user.first_name.str('utf-8'), 'last_name': update.message.from_user.last_name.str('utf-8'),
             'username': update.message.from_user.username, 'user_id': update.message.from_user.id}
     return user
 
