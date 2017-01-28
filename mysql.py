@@ -10,7 +10,7 @@ cur = db.cursor()
 
 ## make list
 def create_list(chat_id, name):
-    sql = "INSERT INTO list (chat_id, name) VALUES (%s, %s)" % (chat_id, name)
+    sql = "INSERT INTO lists (chat_id, name) VALUES (%s, %s)" % (chat_id, name)
     try:
         cur.execute(sql)
         db.commit()
