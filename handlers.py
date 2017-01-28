@@ -21,7 +21,7 @@ def krystian(bot, update):
 def make(bot, update, args):
     name = ' '.join(args)
     chat_id = update.message.chat_id
-    exists = mysql.check_list_existence(chat_id)
+    exists = mysql.checkListExistence(chat_id)
     if exists == True:
         text = "There is already created list. You have to close it first with /close"
         print "list exists"
@@ -37,7 +37,7 @@ def make(bot, update, args):
 
 def close(bot, update):
     chat_id = update.message.chat_id
-    exists = mysql.check_list_existence(chat_id)
+    exists = mysql.checkListExistence(chat_id)
     if exists == True:
         mysql.close_list(chat_id)
         print "list closed"
@@ -50,7 +50,7 @@ def close(bot, update):
 def willattend(bot, update, args):
     #TODO implement fime functionality, for now args not in use and time populated with NULL value
     chat_id = update.message.chat_id
-    exists = mysql.check_list_existence(chat_id)
+    exists = mysql.checkListExistence(chat_id)
     if exists == True:
         user = makeUserDic(update)
         mysql.attend(chat_id,user,answer='will')

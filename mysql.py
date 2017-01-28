@@ -12,11 +12,12 @@ def getListId(chat_id):
     sql = "SELECT id FROM lists WHERE chat_id = %s" % (chat_id)
     cur.execute(sql)
     list_id = cur.fetchone()
-    list_id = int(list_id)
+    if list_id is not None:
+        list_id = int(list_id)
     cur.close()
     return list_id
 
-def check_list_existence(chat_id):
+def checkListExistence(chat_id):
     result = getListId(chat_id)
     #######
     print "####result of existence: \n", result, "____________________________"
