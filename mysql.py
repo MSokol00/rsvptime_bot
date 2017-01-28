@@ -50,6 +50,7 @@ def addUser(user):
 def addRSVP(list_id, user_id, answer_id, time=None):
     cur = db.cursor()
     #TODO time functionality
+    print "addRSVP: list_id",list_id,";user_id:",user_id,";answer_id:",answer_id
     sql = "INSER INTO rsvp (time, list_id, user_id, answer_id) VALUES (NULL, '{}', '{}', '{}')".format(
         list_id, user_id, answer_id)
     cur.execute(sql)
