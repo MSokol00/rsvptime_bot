@@ -13,7 +13,7 @@ def getListId(chat_id):
     cur.execute(sql)
     list_id = cur.fetchone()
     if list_id is not None:
-        list_id = int(list_id)
+        list_id = int(list_id[0])
     cur.close()
     return list_id
 
