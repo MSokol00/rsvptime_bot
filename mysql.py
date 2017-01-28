@@ -14,13 +14,13 @@ def create_list(chat_id, name):
     print sql
     print chat_id
     print name
-    try:
-        cur.execute(sql)
-        db.commit()
-        return True
-    except:
-        db.rollback()
-        return False
+    #try:
+    cur.execute(sql)
+    db.commit()
+    return True
+    #except:
+       # db.rollback()
+      #  return False
 
 
 
