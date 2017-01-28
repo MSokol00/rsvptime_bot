@@ -54,7 +54,7 @@ def willattend(bot, update, args):
     if exists == True:
         user = makeUserDic(update)
         mysql.attend(chat_id,user,answer='will')
-        text = "{} {} will attend!".format(user['first_name'],user['last_name'])
+        text = u"{} {} will attend!".format(user['first_name'],user['last_name'])
     else:
         text = "There is no list to attend! Create one with /make"
 
