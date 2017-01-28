@@ -39,7 +39,7 @@ def checkUserExistence(user_id):
 
 def addUser(user):
     cur = db.cursor()
-    sql = "INSERT INTO users (user_id, first_name, last_name, user_name) VALUES ('{}', '{}', '{}', '{}')".format(
+    sql = u"INSERT INTO users (user_id, first_name, last_name, user_name) VALUES ('{}', '{}', '{}', '{}')".format(
         user['user_id'], user['first_name'], user['last_name'], user['username'])
     cur.execute(sql)
     db.commit()
