@@ -19,20 +19,15 @@ def getListId(chat_id):
 
 def checkListExistence(chat_id):
     result = getListId(chat_id)
-    #######
-    print "####result of existence: \n", result, "____________________________"
-
     if result is not None:
         exist = True
     else:
         exist = False
-
-    print exist
     return exist
 
 def checkUserExistence(user_id):
     cur = db.cursor()
-    sql = "SELECT id FROM users WHERE user_id = %s" % (user_id)
+    sql = "SELECT id FROM users WHERE user_id = '%s'" % (user_id)
     cur.execute(sql)
     result = cur.fetchone()
     if result is not None:
