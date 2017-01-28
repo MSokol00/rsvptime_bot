@@ -8,7 +8,7 @@ import logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
 updater = Updater(token="308560134:AAGxr4JKMCj-vGKdIPZKvOT51Sf8UPW837o")
-dispatcher = updater.dispatche
+dispatcher = updater.dispatcher
 
 
 # command handlers
