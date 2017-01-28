@@ -27,6 +27,9 @@ dispatcher.add_handler(willattend_handler)
 wontattend_handler = CommandHandler('wontattend', handlers.wontattend, pass_args=True)
 dispatcher.add_handler(wontattend_handler)
 
+tentiative_handler = CommandHandler('tentiative', handlers.tentiative, pass_args=True)
+dispatcher.add_handler(tentiative_handler)
+
 # init
 if __name__ == "__main__":
     updater.start_polling()
