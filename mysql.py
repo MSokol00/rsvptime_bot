@@ -27,7 +27,7 @@ def checkListExistence(chat_id):
 
 def checkUserExistence(user_id):
     cur = db.cursor()
-    sql = "SELECT id FROM users WHERE user_id = '%s'" % (user_id)
+    sql = "SELECT user_id FROM users WHERE user_id = '%s'" % (user_id)
     cur.execute(sql)
     result = cur.fetchone()
     if result is not None:
