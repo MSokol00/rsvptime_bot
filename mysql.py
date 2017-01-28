@@ -45,3 +45,5 @@ def close_list(chat_id):
     sql = "DELETE FROM lists WHERE chat_id = %s" % (chat_id)
     print sql
     cur.execute(sql)
+    db.commit()
+    cur.close()

@@ -37,3 +37,7 @@ def close(bot, update):
         text = "There is no list to close! You have to first create one with /make"
 
     bot.sendMessage(chat_id=chat_id, text=text)
+
+def list(bot, update):
+    chat_id = update.message.chat_id
+    exit
