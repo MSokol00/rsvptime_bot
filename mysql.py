@@ -18,7 +18,7 @@ def check_list_existence(chat_id):
     #######
     print "####result of existence: \n", result, "____________________________"
 
-    if len(result) >= 1: exist = True
+    if result is not None: exist = True
     else: exist = False
 
     print exist
