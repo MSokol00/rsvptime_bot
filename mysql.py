@@ -18,7 +18,7 @@ def check_list_existence(chat_id):
     #######
     print "####result of existence: \n"
     print result
-    print result[1]
+    print result[0]
     print "____________________________"
     ########
     if result[0] == 'yes': exist = True
