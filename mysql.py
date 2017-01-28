@@ -50,6 +50,7 @@ def addUser(user):
 def addRSVP(list_id, user_id, answer_id, time=None):
     cur = db.cursor()
     #TODO time functionality
+
     print "addRSVP: list_id",list_id,";user_id:",user_id,";answer_id:",answer_id
     sql = "INSERT INTO rsvp (time, list_id, user_id, answer_id) VALUES (NULL, '{}', '{}', '{}')".format(
         list_id, user_id, answer_id)
@@ -57,6 +58,27 @@ def addRSVP(list_id, user_id, answer_id, time=None):
     cur.execute(sql)
     db.commit()
     cur.close()
+
+def updateRSVP(list_id, user_id, answer_id, time=None):
+    cur = db.cursor()
+    # TODO time functionality
+
+    print "updateRSVP: list_id", list_id, ";user_id:", user_id, ";answer_id:", answer_id
+    sql = "UPDATE rsvp SET time = NULL, answer_id = '{}') WHERE list_id = '{}' and user_id = '{}'".format(answer_id,list_id,user_id)
+    print sql
+    cur.execute(sql)
+    db.commit()
+    cur.close()
+
+def checkRSVP(list_id, user_id, answer_id, time=None):
+    cur = db.cursor()
+    sql = "SELECT answer_id FROM rsvp WHERE list_id = '{}' and user_id = '{}'".format(list_id,user_id)
+    cur.execute(sql)
+    result = cur.fetchone()
+    if result is None:
+        addRSVP(list_id=list_id, user_id=user_id, answer_id=answer_id)
+    elif result is not None and int(result[0]) != answer_id:
+        updateRSVP(list_id=list_id, answer_id=answer_id, user_id=user_id, time=None)
 
 ## make list
 def create_list(chat_id, name):
@@ -91,7 +113,7 @@ def attend(chat_id, user, answer):
     }
     print "attend: answer:",answer
     answer_id = answer_ids.get(answer)
-    addRSVP(list_id=list_id,user_id=user['user_id'],answer_id=answer_id)
+    checkRSVP(list_id=list_id,user_id=user['user_id'],answer_id=answer_id)
 
 
 
