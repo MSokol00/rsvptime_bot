@@ -88,6 +88,7 @@ def attend(chat_id, user, answer):
         'wont': 2,
         'tent': 3
     }
+    print "attend: answer:",answer
     answer_id = answer_ids.get(answer)
     addRSVP(list_id=list_id,user_id=user['user_id'],answer_id=answer_id)
 
