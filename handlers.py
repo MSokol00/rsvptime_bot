@@ -59,3 +59,16 @@ def willattend(bot, update, args):
         text = "There is no list to attend! Create one with /make"
 
     bot.sendMessage(chat_id=chat_id, text=text)
+
+def wontattend(bot, update, args):
+    #TODO implement fime functionality, for now args not in use and time populated with NULL value
+    chat_id = update.message.chat_id
+    exists = mysql.checkListExistence(chat_id)
+    if exists == True:
+        user = makeUserDic(update)
+        mysql.attend(chat_id,user,answer='wont')
+        text = u"{} {} won't attend!".format(user['first_name'],user['last_name'])
+    else:
+        text = "There is no list to attend! Create one with /make"
+
+    bot.sendMessage(chat_id=chat_id, text=text)

@@ -24,6 +24,9 @@ dispatcher.add_handler(close_handler)
 willattend_handler = CommandHandler('willattend', handlers.willattend, pass_args=True)
 dispatcher.add_handler(willattend_handler)
 
+wontattend_handler = CommandHandler('wontattend', handlers.wontattend, pass_args=True)
+dispatcher.add_handler(wontattend_handler)
+
 # init
 if __name__ == "__main__":
     updater.start_polling()
