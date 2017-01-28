@@ -10,7 +10,7 @@ def krystian(bot, update):
                                                          " CS:GO than rest of his team")
 
 def make(bot, update, args):
-    name = ''.join(args)
+    name = ' '.join(args)
     chat_id = update.message.chat_id
     exists = mysql.check_list_existence(chat_id)
     if exists == True:
