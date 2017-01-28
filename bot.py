@@ -34,10 +34,12 @@ def make(bot, update, args):
     exists = mysql.check_list_existence(chat_id)
     if exists == True:
         text = "There is already created list. You have to close it first with \/close"
+        print "list exists"
     else:
         result = mysql.create_list(chat_id, name)
         if result == True:
             text = "List %s has been created succesfully!" % (name)
+            print "list created"
         else:
             text = "Ups! Something went wrong :( Your list has not been created. Please contact MSokol00 on telegram"
 

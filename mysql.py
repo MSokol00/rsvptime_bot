@@ -10,9 +10,20 @@ cur = db.cursor()
 def check_list_existence(chat_id):
     sql = "SELECT 1 as 'result' FROM lists WHERE chat_id = %s" % (chat_id)
     cur.execute(sql)
+    ########
+    print "####existence sql: \n"+str(sql)+"\n ________________"
+    ########
     result = cur.fetchone()
+    #######
+    print "####result of existence: \n"
+    print result
+    print "____________________________"
+    ########
     if result[0] == '1': exist = True
     else: exist = False
+    ########
+    print exist
+    ########
     return exist
 
 ## make list
