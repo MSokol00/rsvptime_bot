@@ -3,8 +3,10 @@ import MySQLdb
 
 db = MySQLdb.connect(host="localhost",    # your host, usually localhost
                      user="root",         # your username
-                     #passwd="megajonhy",  # your password
-                     db="rsvptime_bot")        # name of the data base
+                     # passwd="megajonhy",  # your password
+                     db="rsvptime_bot",       # name of the data base
+                     charset='utf16')     # overwrites default charset
+
 
 
 def getListId(chat_id):
