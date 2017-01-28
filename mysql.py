@@ -9,7 +9,7 @@ db = MySQLdb.connect(host="localhost",    # your host, usually localhost
 
 def check_list_existence(chat_id):
     cur = db.cursor()
-    sql = "SELECT 'yes' as 'result' FROM lists WHERE chat_id = %s" % (chat_id)
+    sql = "SELECT '*' as 'result' FROM lists WHERE chat_id = %s" % (chat_id)
     cur.execute(sql)
 
     print "####existence sql: \n"+str(sql)+"\n ________________"
@@ -18,7 +18,7 @@ def check_list_existence(chat_id):
     #######
     print "####result of existence: \n", result, "____________________________"
 
-    if result[0] == 'yes': exist = True
+    if len(result) >= 1: exist = True
     else: exist = False
 
     print exist
