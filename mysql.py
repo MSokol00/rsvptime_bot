@@ -64,7 +64,7 @@ def updateRSVP(list_id, user_id, answer_id, time=None):
     # TODO time functionality
 
     print "updateRSVP: list_id", list_id, ";user_id:", user_id, ";answer_id:", answer_id
-    sql = "UPDATE rsvp SET time = NULL, answer_id = '{}') WHERE list_id = '{}' and user_id = '{}'".format(answer_id,list_id,user_id)
+    sql = "UPDATE rsvp SET time = NULL, answer_id = '{}' WHERE list_id = '{}' and user_id = '{}'".format(answer_id,list_id,user_id)
     print sql
     cur.execute(sql)
     db.commit()
