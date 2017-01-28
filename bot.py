@@ -31,11 +31,16 @@ dispatcher.add_handler(krystian_handler)
 def make(bot, update, args):
     name = ''.join(args)
     chat_id = update.message.chat_id
-    result = mysql.create_list(chat_id, name)
-    if result == True:
-        text = "List %s has been created succesfully!" % (name)
+    exists = mysql.check_list_existence(chat_id)
+    if exists == True:
+        text = "There is already created list. You have to close it first with \/close"
     else:
-        text = "Ups! Something went wrong :( Your list has not been created. Please contact MSokol00 on telegram"
+        result = mysql.create_list(chat_id, name)
+        if result == True:
+            text = "List %s has been created succesfully!" % (name)
+        else:
+            text = "Ups! Something went wrong :( Your list has not been created. Please contact MSokol00 on telegram"
+
     bot.sendMessage(chat_id=chat_id, text=text)
 
 make_handler = CommandHandler('make', make, pass_args=True)
