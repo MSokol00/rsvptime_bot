@@ -16,16 +16,30 @@ def emojiAnswer(answer_id):
     answer = str(int(answer_id))
     return emoji[answer]
 
-def buildListText(list):
-    title = "On the list for '{}': \n \n".format(list['listName'])
+def buildListText(list, status):
+    if status == 'open':
+        title = "On the list for '{}': \n \n".format(list['listName'])
+    elif status == 'close':
+        title = "List '{}' closed! Final results: \n \n".format(list['listName'])
     print list
-    i = 1
-    people = u''
+    wi_i = 1
+    wo_i = 1
+    t_i = 1
+    will_attend = u''
+    wont_attend = u''
+    tent = u''
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
-        people = people+unicode(str(i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
-        i += 1
-    text = title+people
+        if int(tuple[0]) == 1:
+            will_attend = will_attend+unicode(str(wi_i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            wi_i += 1
+        elif int(tuple[0]) == 2:
+            wont_attend = wont_attend+unicode(str(wo_i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            wo_i += 1
+        elif int(tuple[0]) == 3:
+            tent = tent+unicode(str(t_i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            t_i +=1
+    text = title+will_attend+'\n'+tent+'\n'+wont_attend
     return text
 
 ## handlers
@@ -111,7 +125,7 @@ def list(bot, update):
     exists = mysql.checkListExistence(chat_id)
     if exists == True:
         list= mysql.getListRSVP(chat_id)
-        text = buildListText(list)
+        text = buildListText(list, 'open')
     else:
         text = "There is no list. You should create one with /make"
 
