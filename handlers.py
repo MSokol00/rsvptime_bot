@@ -7,6 +7,23 @@ def makeUserDic(update):
             'username': update.message.from_user.username, 'user_id': update.message.from_user.id}
     return user
 
+def emojiAnswer(answer_id):
+    emoji = {
+        '1': u'U+2705',
+        '2': u'U+274C',
+        '3': u'U+2754'
+    }
+    answer = str(int(answer_id))
+    return emoji[answer]
+
+def buildListText(list):
+    title = "On the list for '{}': \n \n".format(list['listName'])
+    i = 1
+    people = u''
+    for tuple in list['users']:
+        emoji = emojiAnswer(tuple[0])
+        people = people+str(i)+'. '+emoji,tuple[1],tuple[2],tuple[3],'\n'
+    print people
 
 ## handlers
 
@@ -91,7 +108,7 @@ def list(bot, update):
     exists = mysql.checkListExistence(chat_id)
     if exists == True:
         list= mysql.getListRSVP(chat_id)
-        print list
+        text = buildListText(list)
     else:
         text = "There is no list. You should create one with /make"
 

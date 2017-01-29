@@ -34,10 +34,8 @@ def getAttendees(list_id):
     sql = "SELECT r.answer_id, u.first_name, u.last_name, u.user_name " \
           "FROM rsvp r INNER JOIN users u on r.user_id = u.user_id " \
           "WHERE r.list_id = '{}'".format(list_id)
-    print sql
     cur.execute(sql)
     attendees = cur.fetchall()
-    print attendees
     cur.close()
     return attendees
 
