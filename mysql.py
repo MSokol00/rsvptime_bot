@@ -31,7 +31,7 @@ def getListName(chat_id):
 
 def getAttendees(list_id):
     cur = db.cursor()
-    sql = "SELECT r.answer, u.first_name, u.last_name, u.user_name " \
+    sql = "SELECT r.answer_id, u.first_name, u.last_name, u.user_name " \
           "FROM rsvp r INNER JOIN users u on r.user_id = u.user_id " \
           "WHERE r.list_id = '{}'".format(list_id)
     print sql
