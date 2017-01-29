@@ -143,7 +143,6 @@ def getListRSVP(chat_id):
         'listName': listName,
         'users': attendees
     }
-    print list
     return list
 
 
