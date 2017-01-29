@@ -11,7 +11,7 @@ def emojiAnswer(answer_id):
     emoji = {
         '1': u'\u2705',
         '2': u'\u274C',
-        '3': u'\u2754'
+        '3': u'\u2753'
     }
     answer = str(int(answer_id))
     return emoji[answer]
