@@ -22,7 +22,12 @@ def buildListText(list):
     people = u''
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
-        people = people+str(i)+'. '+emoji,tuple[1],tuple[2],tuple[3],'\n'
+        print emoji
+        print str(i)
+        print tuple[1]
+        print tuple[2]
+        print tuple[3]
+        people = people,str(i)+'. ',emoji,tuple[1],tuple[2],tuple[3],'\n'
     print people
 
 ## handlers
