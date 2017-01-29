@@ -23,7 +23,7 @@ def buildListText(list):
     people = u''
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
-        people = people+str(i)+'. '+emoji.encode('utf-8')+' '+tuple[1].encode('utf-8')+' '+tuple[2].encode('utf-8')+' '+tuple[3].encode('utf-8')+'\n'
+        people = people+unicode(str(i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' '+tuple[3]+u'\n'
         i += 1
     print people
 
