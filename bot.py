@@ -1,6 +1,6 @@
 # resources
 from telegram.ext import Updater, CommandHandler
-import handlers, logging, sys
+import handlers, logging
 
 # configs
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
@@ -29,6 +29,9 @@ dispatcher.add_handler(wontattend_handler)
 
 tentiative_handler = CommandHandler('tentiative', handlers.tentiative, pass_args=True)
 dispatcher.add_handler(tentiative_handler)
+
+list_handler = CommandHandler('list', handlers.list)
+dispatcher.add_handler(list_handler)
 
 # init
 if __name__ == "__main__":

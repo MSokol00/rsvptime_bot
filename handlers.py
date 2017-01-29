@@ -85,3 +85,15 @@ def tentiative(bot, update, args):
         text = "There is no list to attend! Create one with /make"
 
     bot.sendMessage(chat_id=chat_id, text=text)
+
+def list(bot, update):
+    chat_id = update.message.chat_id
+    exists = mysql.checkListExistence(chat_id)
+    if exists == True:
+        list= mysql.getListRSVP(chat_id)
+        print list
+    else:
+        text = "There is no list. You should create one with /make"
+
+
+    bot.sendMessage(chat_id=chat_id, text=text)
