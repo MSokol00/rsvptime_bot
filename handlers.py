@@ -24,9 +24,9 @@ def buildListText(list):
         emoji = emojiAnswer(tuple[0])
         print emoji
         print str(i)
-        print tuple[1]
-        print tuple[2]
-        print tuple[3]
+        print tuple[1].str('utf-8')
+        print tuple[2].str('utf-8')
+        print tuple[3].str('utf-8')
         people = people,str(i)+'. ',emoji,tuple[1],tuple[2],tuple[3],'\n'
     print people
 
