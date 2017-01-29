@@ -26,7 +26,7 @@ def buildListText(list):
         print emoji
         print str(i)
         print tuple[1]
-        print tuple[2]
+        print tuple[2].encode('utf-8')
         print unicode(tuple[3]).encode('utf-8')
         people = people,str(i)+'. ',emoji,tuple[1],tuple[2],tuple[3],'\n'
     print people
