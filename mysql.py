@@ -25,11 +25,11 @@ def getListName(chat_id):
     cur.execute(sql)
     list_name = cur.fetchone()
     if list_name is not None:
-        list_name = str(list_id[0])
+        list_name = str(list_name[0])
     cur.close()
     return list_name
 
-def getAttendees(list_id)
+def getAttendees(list_id):
     cur = db.cursor()
     sql = "SELECT r.answer, u.first_name, u.last_name, u.user_name " \
           "FROM rsvp r INNER JOIN users u on r.user_id = u.user_id " \
