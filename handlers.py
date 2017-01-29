@@ -25,7 +25,8 @@ def buildListText(list):
         emoji = emojiAnswer(tuple[0])
         people = people+unicode(str(i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' '+tuple[3]+u'\n'
         i += 1
-    print people.encode('utf-8')
+    text = title+people
+    return text
 
 ## handlers
 
