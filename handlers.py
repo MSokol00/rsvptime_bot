@@ -18,6 +18,7 @@ def emojiAnswer(answer_id):
 
 def buildListText(list):
     title = "On the list for '{}': \n \n".format(list['listName'])
+    print list
     i = 1
     people = u''
     for tuple in list['users']:
