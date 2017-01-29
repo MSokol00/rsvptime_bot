@@ -9,9 +9,9 @@ def makeUserDic(update):
 
 def emojiAnswer(answer_id):
     emoji = {
-        '1': u'U+2705',
-        '2': u'U+274C',
-        '3': u'U+2754'
+        '1': u'\u2705',
+        '2': u'\u274C',
+        '3': u'\u2754'
     }
     answer = str(int(answer_id))
     return emoji[answer]
@@ -23,7 +23,7 @@ def buildListText(list):
     people = u''
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
-        people = people+unicode(str(i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' '+tuple[3]+u'\n'
+        people = people+unicode(str(i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
         i += 1
     text = title+people
     return text
