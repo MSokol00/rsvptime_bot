@@ -19,6 +19,26 @@ def getListId(chat_id):
     cur.close()
     return list_id
 
+def getListName(chat_id):
+    cur = db.cursor()
+    sql = "SELECT name FROM lists WHERE chat_id = %s" % (chat_id)
+    cur.execute(sql)
+    list_name = cur.fetchone()
+    if list_name is not None:
+        list_name = str(list_name[0])
+    cur.close()
+    return list_name
+
+def getAttendees(list_id):
+    cur = db.cursor()
+    sql = "SELECT r.answer_id, u.first_name, u.last_name, u.user_name " \
+          "FROM rsvp r INNER JOIN users u on r.user_id = u.user_id " \
+          "WHERE r.list_id = '{}'".format(list_id)
+    cur.execute(sql)
+    attendees = cur.fetchall()
+    cur.close()
+    return attendees
+
 def checkListExistence(chat_id):
     result = getListId(chat_id)
     if result is not None:
@@ -114,6 +134,16 @@ def attend(chat_id, user, answer):
     print "attend: answer:",answer
     answer_id = answer_ids.get(answer)
     checkRSVP(list_id=list_id,user_id=user['user_id'],answer_id=answer_id)
+
+def getListRSVP(chat_id):
+    list_id = getListId(chat_id)
+    listName = getListName(chat_id)
+    attendees = getAttendees(list_id)
+    list = {
+        'listName': listName,
+        'users': attendees
+    }
+    return list
 
 
 

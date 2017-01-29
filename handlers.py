@@ -7,6 +7,40 @@ def makeUserDic(update):
             'username': update.message.from_user.username, 'user_id': update.message.from_user.id}
     return user
 
+def emojiAnswer(answer_id):
+    emoji = {
+        '1': u'\u2705',
+        '2': u'\u274C',
+        '3': u'\u2753'
+    }
+    answer = str(int(answer_id))
+    return emoji[answer]
+
+def buildListText(list, status):
+    if status == 'open':
+        title = "On the list for '{}': \n \n".format(list['listName'])
+    elif status == 'close':
+        title = "List '{}' closed! Final results: \n \n".format(list['listName'])
+    print list
+    wi_i = 1
+    wo_i = 1
+    t_i = 1
+    will_attend = u''
+    wont_attend = u''
+    tent = u''
+    for tuple in list['users']:
+        emoji = emojiAnswer(tuple[0])
+        if int(tuple[0]) == 1:
+            will_attend = will_attend+unicode(str(wi_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            wi_i += 1
+        elif int(tuple[0]) == 2:
+            wont_attend = wont_attend+unicode(str(wo_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            wo_i += 1
+        elif int(tuple[0]) == 3:
+            tent = tent+unicode(str(t_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            t_i +=1
+    text = title+will_attend+'\n'+tent+'\n'+wont_attend
+    return text
 
 ## handlers
 
@@ -83,5 +117,17 @@ def tentiative(bot, update, args):
         text = u"{} {} is tentative...".format(user['first_name'],user['last_name'])
     else:
         text = "There is no list to attend! Create one with /make"
+
+    bot.sendMessage(chat_id=chat_id, text=text)
+
+def list(bot, update):
+    chat_id = update.message.chat_id
+    exists = mysql.checkListExistence(chat_id)
+    if exists == True:
+        list= mysql.getListRSVP(chat_id)
+        text = buildListText(list, 'open')
+    else:
+        text = "There is no list. You should create one with /make"
+
 
     bot.sendMessage(chat_id=chat_id, text=text)
