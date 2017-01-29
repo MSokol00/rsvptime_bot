@@ -31,13 +31,13 @@ def buildListText(list, status):
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
         if int(tuple[0]) == 1:
-            will_attend = will_attend+unicode(str(wi_i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            will_attend = will_attend+unicode(str(wi_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
             wi_i += 1
         elif int(tuple[0]) == 2:
-            wont_attend = wont_attend+unicode(str(wo_i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            wont_attend = wont_attend+unicode(str(wo_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
             wo_i += 1
         elif int(tuple[0]) == 3:
-            tent = tent+unicode(str(t_i))+u'. '+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            tent = tent+unicode(str(t_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
             t_i +=1
     text = title+will_attend+'\n'+tent+'\n'+wont_attend
     return text
