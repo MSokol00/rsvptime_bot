@@ -1,15 +1,18 @@
 #!/usr/bin/python
 import MySQLdb
 
-db = MySQLdb.connect(host="localhost",    # your host, usually localhost
-                     user="root",         # your username
-                     # passwd="megajonhy",  # your password
-                     db="rsvptime_bot",       # name of the data base
-                     charset='utf8')     # overwrites default charset
+
 
 
 
 def getListId(chat_id):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     sql = "SELECT id FROM lists WHERE chat_id = %s" % (chat_id)
     cur.execute(sql)
@@ -20,6 +23,13 @@ def getListId(chat_id):
     return list_id
 
 def getListName(chat_id):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     sql = "SELECT name FROM lists WHERE chat_id = %s" % (chat_id)
     cur.execute(sql)
@@ -30,6 +40,13 @@ def getListName(chat_id):
     return list_name
 
 def getAttendees(list_id):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     sql = "SELECT r.answer_id, u.first_name, u.last_name, u.user_name " \
           "FROM rsvp r INNER JOIN users u on r.user_id = u.user_id " \
@@ -48,6 +65,13 @@ def checkListExistence(chat_id):
     return exist
 
 def checkUserExistence(user_id):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     sql = "SELECT user_id FROM users WHERE user_id = '%s'" % (user_id)
     cur.execute(sql)
@@ -60,6 +84,13 @@ def checkUserExistence(user_id):
     return exist
 
 def addUser(user):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     sql = u"INSERT INTO users (user_id, first_name, last_name, user_name) VALUES ('{}', '{}', '{}', '{}')".format(
         user['user_id'], user['first_name'], user['last_name'], user['username'])
@@ -68,6 +99,13 @@ def addUser(user):
     cur.close()
 
 def addRSVP(list_id, user_id, answer_id, time=None):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     #TODO time functionality
 
@@ -80,6 +118,13 @@ def addRSVP(list_id, user_id, answer_id, time=None):
     cur.close()
 
 def updateRSVP(list_id, user_id, answer_id, time=None):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     # TODO time functionality
 
@@ -91,6 +136,13 @@ def updateRSVP(list_id, user_id, answer_id, time=None):
     cur.close()
 
 def checkRSVP(list_id, user_id, answer_id, time=None):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     sql = "SELECT answer_id FROM rsvp WHERE list_id = '{}' and user_id = '{}'".format(list_id,user_id)
     cur.execute(sql)
@@ -102,6 +154,13 @@ def checkRSVP(list_id, user_id, answer_id, time=None):
 
 ## make list
 def create_list(chat_id, name):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     sql = "INSERT INTO lists (chat_id, name) VALUES ({}, '{}')".format(chat_id, name)
     try:
@@ -115,6 +174,13 @@ def create_list(chat_id, name):
         return False
 
 def close_list(chat_id):
+
+    db = MySQLdb.connect(host="localhost",  # your host, usually localhost
+                         user="root",  # your username
+                         # passwd="megajonhy",  # your password
+                         db="rsvptime_bot",  # name of the data base
+                         charset='utf8')  # overwrites default charset
+
     cur = db.cursor()
     sql = "DELETE FROM lists WHERE chat_id = {}".format(chat_id)
     print sql
