@@ -20,6 +20,7 @@ def getListId(chat_id):
     if list_id is not None:
         list_id = int(list_id[0])
     cur.close()
+    db.close()
     return list_id
 
 def getListName(chat_id):
@@ -37,6 +38,7 @@ def getListName(chat_id):
     if list_name is not None:
         list_name = str(list_name[0])
     cur.close()
+    db.close()
     return list_name
 
 def getAttendees(list_id):
@@ -54,6 +56,7 @@ def getAttendees(list_id):
     cur.execute(sql)
     attendees = cur.fetchall()
     cur.close()
+    db.close()
     return attendees
 
 def checkListExistence(chat_id):
@@ -81,6 +84,7 @@ def checkUserExistence(user_id):
     else:
         exist = False
     cur.close()
+    db.close()
     return exist
 
 def addUser(user):
@@ -97,6 +101,7 @@ def addUser(user):
     cur.execute(sql)
     db.commit()
     cur.close()
+    db.close()
 
 def addRSVP(list_id, user_id, answer_id, time=None):
 
@@ -116,6 +121,7 @@ def addRSVP(list_id, user_id, answer_id, time=None):
     cur.execute(sql)
     db.commit()
     cur.close()
+    db.close()
 
 def updateRSVP(list_id, user_id, answer_id, time=None):
 
@@ -134,6 +140,7 @@ def updateRSVP(list_id, user_id, answer_id, time=None):
     cur.execute(sql)
     db.commit()
     cur.close()
+    db.close()
 
 def checkRSVP(list_id, user_id, answer_id, time=None):
 
@@ -167,10 +174,12 @@ def create_list(chat_id, name):
         cur.execute(sql)
         db.commit()
         cur.close()
+        db.close()
         return True
     except:
         db.rollback()
         cur.close()
+        db.close()
         return False
 
 def close_list(chat_id):
@@ -187,6 +196,7 @@ def close_list(chat_id):
     cur.execute(sql)
     db.commit()
     cur.close()
+    db.close()
 
 def attend(chat_id, user, answer):
     list_id = getListId(chat_id)
