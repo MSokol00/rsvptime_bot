@@ -58,7 +58,7 @@ def krystian(bot, update):
 def make(bot, update, args):
     name = u' '.join(args)
     #debug
-    print(name)
+    print name.encode('utf-8')
     #/debug
 
     chat_id = update.message.chat_id
