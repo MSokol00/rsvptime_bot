@@ -56,8 +56,7 @@ def krystian(bot, update):
                                                          " CS:GO than rest of his team")
 
 def make(bot, update, args):
-    name = ' '.join(args)
-    name = unicode(name)
+    name = u' '.join(args)
     #debug
     print(name)
     #/debug
