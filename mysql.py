@@ -31,9 +31,9 @@ def getListName(chat_id):
     cur = db.cursor()
     sql = "SELECT name FROM lists WHERE chat_id = %s" % (chat_id)
     cur.execute(sql)
-    list_name = cur.fetchone()
-    if list_name is not None:
-        list_name = str(list_name[0])
+    list_name_cur = cur.fetchone()
+    list_name = u''
+    list_name += str(list_name_cur[0])
     cur.close()
     db.close()
     return list_name
