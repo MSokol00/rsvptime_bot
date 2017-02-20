@@ -18,9 +18,9 @@ def emojiAnswer(answer_id):
 
 def buildListText(list, status):
     if status == 'open':
-        title = "On the list for '{}': \n \n".format(list['listName'])
+        title = u"On the list for '{}': \n \n".format(list['listName'])
     elif status == 'close':
-        title = "List '{}' closed! Final results: \n \n".format(list['listName'])
+        title = u"List '{}' closed! Final results: \n \n".format(list['listName'])
     print list
     wi_i = 1
     wo_i = 1

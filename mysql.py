@@ -33,7 +33,7 @@ def getListName(chat_id):
     cur.execute(sql)
     list_name = cur.fetchone()
     if list_name is not None:
-        list_name = str(list_name[0])
+        list_name = str(list_name[0]).encode('utf-8')
     cur.close()
     db.close()
     return list_name
@@ -166,7 +166,7 @@ def create_list(chat_id, name):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    sql = "INSERT INTO lists (chat_id, name) VALUES ({}, '{}')".format(chat_id, name)
+    sql = u"INSERT INTO lists (chat_id, name) VALUES ({}, '{}')".format(chat_id, name)
     try:
         cur.execute(sql)
         db.commit()
