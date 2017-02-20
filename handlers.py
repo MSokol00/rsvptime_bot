@@ -9,9 +9,9 @@ def makeUserDic(update):
 
 def emojiAnswer(answer_id):
     emoji = {
-        '1': u'\u2705',
-        '2': u'\u274C',
-        '3': u'\u2753'
+        '1': u'\u2705', #willattend
+        '2': u'\u274C', #wontattend
+        '3': u'\u1F414'  #tentiative
     }
     answer = str(int(answer_id))
     return emoji[answer]
@@ -31,15 +31,18 @@ def buildListText(list, status):
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
         if int(tuple[0]) == 1:
-            will_attend = will_attend+unicode(str(wi_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            will_attend = will_attend+unicode(str(wi_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u'\n'#+u' \u0040'+tuple[3]+u'\n'
             wi_i += 1
         elif int(tuple[0]) == 2:
-            wont_attend = wont_attend+unicode(str(wo_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            wont_attend = wont_attend+unicode(str(wo_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u'\n'#+u' \u0040'+tuple[3]+u'\n'
             wo_i += 1
         elif int(tuple[0]) == 3:
-            tent = tent+unicode(str(t_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u' \u0040'+tuple[3]+u'\n'
+            tent = tent+unicode(str(t_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u'\n'#u' \u0040'+tuple[3]+u'\n'
             t_i +=1
-    text = title+will_attend+'\n'+tent+'\n'+wont_attend
+    if will_attend is not None: will_attend += u'\n'
+    if wont_attend is not None: wont_attend += u'\n'
+    if tent is not None: tent += u'\n'
+    text = title+will_attend+tent+wont_attend
     return text
 
 ## handlers
@@ -54,6 +57,11 @@ def krystian(bot, update):
 
 def make(bot, update, args):
     name = ' '.join(args)
+
+    #debug
+    print(name)
+    #/debug
+
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
     if exists == True:

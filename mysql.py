@@ -2,9 +2,6 @@
 import MySQLdb
 
 
-
-
-
 def getListId(chat_id):
 
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
