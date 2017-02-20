@@ -33,8 +33,6 @@ def getListName(chat_id):
     cur.execute(sql)
     list_name_cur = cur.fetchone()
     list_name = u''.join(list_name_cur[0])
-    print list_name
-
     cur.close()
     db.close()
     return list_name
