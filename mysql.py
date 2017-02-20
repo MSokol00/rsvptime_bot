@@ -33,7 +33,7 @@ def getListName(chat_id):
     cur.execute(sql)
     list_name = cur.fetchone()
     if list_name is not None:
-        list_name = str(list_name[0]).encode('utf-8')
+        list_name = str(list_name[0])
     cur.close()
     db.close()
     return list_name
