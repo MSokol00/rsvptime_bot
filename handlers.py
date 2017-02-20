@@ -76,7 +76,7 @@ def make(bot, update, args):
             else:
                 text = "Ups! Something went wrong :( Your list has not been created. Please contact MSokol00 on telegram"
         else:
-            text = "Why don't You give a name for Your list? Try /willattend noobs gathering"
+            text = "Why don't You give a name for Your list? Try '/make noobs gathering'"
 
     bot.sendMessage(chat_id=chat_id, text=text)
 
