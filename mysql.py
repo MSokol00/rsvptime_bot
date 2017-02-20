@@ -32,7 +32,7 @@ def getListName(chat_id):
     sql = "SELECT name FROM lists WHERE chat_id = %s" % (chat_id)
     cur.execute(sql)
     list_name_cur = cur.fetchone()
-    list_name = u''.join(list_name_cur[0]).encode(encoding='utf-8')
+    list_name = u''.join(list_name_cur[0])
     print list_name
 
     cur.close()
