@@ -11,7 +11,7 @@ def emojiAnswer(answer_id):
     emoji = {
         '1': u'\u2705', #willattend
         '2': u'\u274C', #wontattend
-        '3': u'\u1F414'  #tentiative
+        '3': u'\U0001F414'  #tentiative
     }
     answer = str(int(answer_id))
     return emoji[answer]
@@ -57,7 +57,7 @@ def krystian(bot, update):
 
 def make(bot, update, args):
     name = ' '.join(args)
-
+    name = unicode(name)
     #debug
     print(name)
     #/debug
