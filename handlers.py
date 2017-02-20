@@ -60,19 +60,23 @@ def make(bot, update, args):
     #debug
     print name.encode('utf-8')
     #/debug
-
     chat_id = update.message.chat_id
+
+    #check if list already exists in chat
     exists = mysql.checkListExistence(chat_id)
     if exists == True:
         text = "There is already created list. You have to close it first with /close"
         print "list exists"
     else:
-        result = mysql.create_list(chat_id, name)
-        if result == True:
-            text = "List %s has been created succesfully!" % (name)
-            print "list created"
+        if name.replace(" ","") != "":
+            result = mysql.create_list(chat_id, name)
+            if result == True:
+                text = "List %s has been created succesfully!" % (name)
+                print "list created"
+            else:
+                text = "Ups! Something went wrong :( Your list has not been created. Please contact MSokol00 on telegram"
         else:
-            text = "Ups! Something went wrong :( Your list has not been created. Please contact MSokol00 on telegram"
+            text = "Why don't You give a name for Your list? Try /willattend noobs gathering"
 
     bot.sendMessage(chat_id=chat_id, text=text)
 
