@@ -39,9 +39,9 @@ def buildListText(list, status):
         elif int(tuple[0]) == 3:
             tent = tent+unicode(str(t_i))+u'.'+emoji+u' '+tuple[1]+u' '+tuple[2]+u'\n'#u' \u0040'+tuple[3]+u'\n'
             t_i +=1
-    if will_attend is not None: will_attend += u'\n'
-    if wont_attend is not None: wont_attend += u'\n'
-    if tent is not None: tent += u'\n'
+    if will_attend.replace(" ","") != "": will_attend += u'\n'
+    if wont_attend.replace(" ","") != "": wont_attend += u'\n'
+    if tent.replace(" ",""): tent += u'\n'
     text = title+will_attend+tent+wont_attend
     return text
 
