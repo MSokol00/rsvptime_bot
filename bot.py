@@ -27,8 +27,8 @@ dispatcher.add_handler(willattend_handler)
 wontattend_handler = CommandHandler('wontattend', handlers.wontattend, pass_args=True)
 dispatcher.add_handler(wontattend_handler)
 
-tentiative_handler = CommandHandler('tentative', handlers.tentiatve, pass_args=True)
-dispatcher.add_handler(tentiative_handler)
+tentative_handler = CommandHandler('tentative', handlers.tentatve, pass_args=True)
+dispatcher.add_handler(tentative_handler)
 
 list_handler = CommandHandler('list', handlers.list)
 dispatcher.add_handler(list_handler)
