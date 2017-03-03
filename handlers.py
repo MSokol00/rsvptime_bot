@@ -118,7 +118,7 @@ def wontattend(bot, update, args):
 
     bot.sendMessage(chat_id=chat_id, text=text)
 
-def tentiative(bot, update, args):
+def tentative(bot, update, args):
     #TODO implement fime functionality, for now args not in use and time populated with NULL value
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
