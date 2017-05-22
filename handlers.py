@@ -105,8 +105,7 @@ def close(bot, update):
 
 
 def willattend(bot, update, args):
-    time_arg = args[0]
-    print time_arg
+    print args
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
     if exists == True:
