@@ -133,7 +133,7 @@ def willattend(bot, update, args):
         if time_bool:
             text = u"{} {} will attend at {:%H:%M}!".format(user['first_name'], user['last_name'], time)
         else:
-            text = u"{} {} will attend!"+u" "+text_time
+            text = u"{} {} will attend!".format(user['first_name'], user['last_name'])+u" "+text_time
         text = text.replace('None ', '')
     else:
         text = u"There is no list to attend! Create one with /make"
