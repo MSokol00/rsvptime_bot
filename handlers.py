@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import mysql
+import re
+import datetime
 
 
 ## some func
@@ -105,16 +107,36 @@ def close(bot, update):
 
 
 def willattend(bot, update, args):
-    print args
+    time_bool = False
+    text_time = u''
+    if args.len() != 0:
+        print args[0]
+
+        if re.match("[0-9]{2}:[0-9]{2}", args[0]) :
+            time_obj = re.split(":", args[0])
+            try:
+                time = datetime.time(int(time_obj[0]), int(time_obj[1]), 00)
+                time_bool = True
+                print time
+            except:
+                text_time = u"Nice try with time :)"
+                print text_time
+        else:
+            text_time = u"Given time is wrong however. Inform about time of Your arrival with: /willattend 16:45."
+            print text_time
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
     if exists == True:
         user = makeUserDic(update)
         mysql.attend(chat_id, user, answer='will')
-        text = u"{} {} will attend!".format(user['first_name'], user['last_name'])
+        #TODO add mysql handler for time
+        if time_bool:
+            text = u"{} {} will attend at {:%H:%M}!".format(user['first_name'], user['last_name'], time)
+        else:
+            text = u"{} {} will attend!"+u" "+text_time
         text = text.replace('None ', '')
     else:
-        text = "There is no list to attend! Create one with /make"
+        text = u"There is no list to attend! Create one with /make"
 
     bot.sendMessage(chat_id=chat_id, text=text)
 
