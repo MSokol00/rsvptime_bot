@@ -21,7 +21,7 @@ def emojiAnswer(answer_id):
     return emoji[answer]
 
 
-def buildListText(list, status):
+def buildListText(list, status): #TODO time bijacz
     if status == 'open':
         title = u"On the list for '{}': \n \n".format(list['listName'])
     elif status == 'close':
@@ -30,22 +30,29 @@ def buildListText(list, status):
     wi_i = 1
     wo_i = 1
     t_i = 1
+
     will_attend = u''
     wont_attend = u''
     tent = u''
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
+        if tuple[4] != 'NULL':
+            time = stringToTime(tuple[4])
+            time_str = u" \u231A {:%H:%M}".format(time)
+        else:
+            time_str = ""
+
         if int(tuple[0]) == 1:
             will_attend = will_attend + unicode(str(wi_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
-                2] + u'\n'  # +u' \u0040'+tuple[3]+u'\n'
+                2] + time_str + u'\n'
             wi_i += 1
         elif int(tuple[0]) == 2:
             wont_attend = wont_attend + unicode(str(wo_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
-                2] + u'\n'  # +u' \u0040'+tuple[3]+u'\n'
+                2] + time_str + u'\n'
             wo_i += 1
         elif int(tuple[0]) == 3:
             tent = tent + unicode(str(t_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
-                2] + u'\n'  # u' \u0040'+tuple[3]+u'\n'
+                2] + time_str + u'\n'
             t_i += 1
     if will_attend.replace(" ", "") != "": will_attend += u'\n'
     if wont_attend.replace(" ", "") != "": wont_attend += u'\n'
@@ -53,11 +60,16 @@ def buildListText(list, status):
     text = title + will_attend + tent + wont_attend
     return text
 
+def stringToTime(string):
+    time_obj = re.split(":", string)
+    time= datetime.time(int(time_obj[0]), int(time_obj[1]), 00)
+    return time
 
 ## handlers
 
 def start(bot, update):
     bot.sendMessage(chat_id=update.message.chat_id, text="I'm a bot, please talk to me!")
+    #TODO change that shit to make something usefull, like help
 
 
 def krystian(bot, update):
@@ -107,15 +119,18 @@ def close(bot, update):
 
 
 def willattend(bot, update, args):
+
+    # time section -----------------------------------------
     time_bool = False
     text_time = u''
+    time = None
     if len(args) != 0:
         print args[0]
 
         if re.match("[0-9]{2}:[0-9]{2}", args[0]) :
-            time_obj = re.split(":", args[0])
+
             try:
-                time = datetime.time(int(time_obj[0]), int(time_obj[1]), 00)
+                time = stringToTime(args[0])
                 time_bool = True
                 print time
             except:
@@ -124,12 +139,12 @@ def willattend(bot, update, args):
         else:
             text_time = u"Given time is wrong however. Inform about time of Your arrival with: /willattend 16:45."
             print text_time
+    # /time section ----------------------------------------
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
     if exists == True:
         user = makeUserDic(update)
-        mysql.attend(chat_id, user, answer='will')
-        #TODO add mysql handler for time
+        mysql.attend(chat_id, user, answer='will', time=time)
         if time_bool:
             text = u"{} {} will attend at {:%H:%M}!".format(user['first_name'], user['last_name'], time)
         else:
@@ -142,7 +157,6 @@ def willattend(bot, update, args):
 
 
 def wontattend(bot, update, args):
-    # TODO implement fime functionality, for now args not in use and time populated with NULL value
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
     if exists == True:
@@ -157,7 +171,6 @@ def wontattend(bot, update, args):
 
 
 def tentative(bot, update, args):
-    # TODO implement fime functionality, for now args not in use and time populated with NULL value
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
     if exists == True:
@@ -172,6 +185,7 @@ def tentative(bot, update, args):
 
 
 def list(bot, update):
+    #TODO time
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
     if exists == True:

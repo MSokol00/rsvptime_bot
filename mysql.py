@@ -46,7 +46,7 @@ def getAttendees(list_id):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    sql = "SELECT r.answer_id, u.first_name, u.last_name, u.user_name " \
+    sql = "SELECT r.answer_id, u.first_name, u.last_name, u.user_name, r.time " \
           "FROM rsvp r INNER JOIN users u on r.user_id = u.user_id " \
           "WHERE r.list_id = '{}'".format(list_id)
     cur.execute(sql)
@@ -99,7 +99,7 @@ def addUser(user):
     cur.close()
     db.close()
 
-def addRSVP(list_id, user_id, answer_id, time=None):
+def addRSVP(list_id, user_id, answer_id, time='NULL'):
 
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
@@ -110,16 +110,16 @@ def addRSVP(list_id, user_id, answer_id, time=None):
     cur = db.cursor()
     #TODO time functionality
 
-    print "addRSVP: list_id",list_id,";user_id:",user_id,";answer_id:",answer_id
-    sql = "INSERT INTO rsvp (time, list_id, user_id, answer_id) VALUES (NULL, '{}', '{}', '{}')".format(
-        list_id, user_id, answer_id)
+    print "addRSVP: list_id",list_id,";user_id:",user_id,";answer_id:",answer_id,"time:",time
+    sql = "INSERT INTO rsvp (time, list_id, user_id, answer_id) VALUES ('{}', '{}', '{}', '{}')".format(
+        time, list_id, user_id, answer_id)
     print sql
     cur.execute(sql)
     db.commit()
     cur.close()
     db.close()
 
-def updateRSVP(list_id, user_id, answer_id, time=None):
+def updateRSVP(list_id, user_id, answer_id, time='NULL'):
 
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
@@ -130,15 +130,16 @@ def updateRSVP(list_id, user_id, answer_id, time=None):
     cur = db.cursor()
     # TODO time functionality
 
-    print "updateRSVP: list_id", list_id, ";user_id:", user_id, ";answer_id:", answer_id
-    sql = "UPDATE rsvp SET time = NULL, answer_id = '{}' WHERE list_id = '{}' and user_id = '{}'".format(answer_id,list_id,user_id)
+    print "updateRSVP: list_id", list_id, ";user_id:", user_id, ";answer_id:", answer_id, "time:", time
+    sql = "UPDATE rsvp SET time = '{}', answer_id = '{}' WHERE list_id = '{}' and user_id = '{}'".format(time,answer_id,list_id,user_id)
     print sql
     cur.execute(sql)
     db.commit()
     cur.close()
     db.close()
 
-def checkRSVP(list_id, user_id, answer_id, time=None):
+
+def checkRSVP(list_id, user_id, answer_id, time='NULL'):
 
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
@@ -147,15 +148,16 @@ def checkRSVP(list_id, user_id, answer_id, time=None):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    sql = "SELECT answer_id FROM rsvp WHERE list_id = '{}' and user_id = '{}'".format(list_id,user_id)
+    sql = "SELECT answer_id, time FROM rsvp WHERE list_id = '{}' and user_id = '{}'".format(list_id,user_id)
     cur.execute(sql)
     result = cur.fetchone()
     if result is None:
-        addRSVP(list_id=list_id, user_id=user_id, answer_id=answer_id)
-    elif result is not None and int(result[0]) != answer_id:
-        updateRSVP(list_id=list_id, answer_id=answer_id, user_id=user_id, time=None)
+        addRSVP(list_id=list_id, user_id=user_id, answer_id=answer_id, time=time)
+    elif result is not None and (int(result[0]) != answer_id or result[1] != time):
+        updateRSVP(list_id=list_id, answer_id=answer_id, user_id=user_id, time=time)
 
-## make list
+
+# make list
 def create_list(chat_id, name):
 
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
@@ -194,7 +196,7 @@ def close_list(chat_id):
     cur.close()
     db.close()
 
-def attend(chat_id, user, answer):
+def attend(chat_id, user, answer, time):
     list_id = getListId(chat_id)
     if checkUserExistence(user['user_id']) == False:
         addUser(user)
@@ -203,9 +205,9 @@ def attend(chat_id, user, answer):
         'wont': 2,
         'tent': 3
     }
-    print "attend: answer:",answer
+    print "attend: answer:", answer
     answer_id = answer_ids.get(answer)
-    checkRSVP(list_id=list_id,user_id=user['user_id'],answer_id=answer_id)
+    checkRSVP(list_id=list_id, user_id=user['user_id'], answer_id=answer_id, time=time)
 
 def getListRSVP(chat_id):
     list_id = getListId(chat_id)
