@@ -105,7 +105,8 @@ def close(bot, update):
 
 
 def willattend(bot, update, args):
-    # TODO implement fime functionality, for now args not in use and time populated with NULL value
+    time_arg = arg[0]
+    print time_arg
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
     if exists == True:
