@@ -197,7 +197,7 @@ def close_list(chat_id):
     cur.close()
     db.close()
 
-def attend(chat_id, user, answer, time):
+def attend(chat_id, user, answer, time='NULL'):
     list_id = getListId(chat_id)
     if checkUserExistence(user['user_id']) == False:
         addUser(user)
