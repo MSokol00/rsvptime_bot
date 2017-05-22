@@ -109,7 +109,7 @@ def close(bot, update):
 def willattend(bot, update, args):
     time_bool = False
     text_time = u''
-    if args.len() != 0:
+    if len(args) != 0:
         print args[0]
 
         if re.match("[0-9]{2}:[0-9]{2}", args[0]) :
