@@ -36,7 +36,7 @@ def buildListText(list, status): #TODO time bijacz
     tent = u''
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
-        if tuple[4] != 'NULL':
+        if tuple[4] not in ['NULL', 'None'] and tuple[4] is not None:
             time = stringToTime(tuple[4])
             time_str = u" \u231A {:%H:%M}".format(time)
         else:
