@@ -148,6 +148,7 @@ def checkRSVP(list_id, user_id, answer_id, time='NULL'):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
+    if time is None: time = 'NULL'
     sql = "SELECT answer_id, time FROM rsvp WHERE list_id = '{}' and user_id = '{}'".format(list_id,user_id)
     cur.execute(sql)
     result = cur.fetchone()

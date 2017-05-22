@@ -60,10 +60,15 @@ def buildListText(list, status): #TODO time bijacz
     text = title + will_attend + tent + wont_attend
     return text
 
+
 def stringToTime(string):
-    time_obj = re.split(":", string)
-    time= datetime.time(int(time_obj[0]), int(time_obj[1]), 00)
+    try:
+        time_obj = re.split(":", string)
+        time= datetime.time(int(time_obj[0]), int(time_obj[1]), 00)
+    except:
+        time = None
     return time
+
 
 ## handlers
 
