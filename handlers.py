@@ -47,7 +47,7 @@ def buildListText(list, status):
             if time_last is None:
                 time_last = time
             else:
-                if time < time_last:
+                if time > time_last:
                     time_last = time
         else:
             time_str = ""
