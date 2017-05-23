@@ -20,6 +20,7 @@ def getListId(chat_id):
     db.close()
     return list_id
 
+
 def getListName(chat_id):
 
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
@@ -36,6 +37,7 @@ def getListName(chat_id):
     cur.close()
     db.close()
     return list_name
+
 
 def getAttendees(list_id):
 
@@ -55,6 +57,7 @@ def getAttendees(list_id):
     db.close()
     return attendees
 
+
 def checkListExistence(chat_id):
     result = getListId(chat_id)
     if result is not None:
@@ -62,6 +65,7 @@ def checkListExistence(chat_id):
     else:
         exist = False
     return exist
+
 
 def checkUserExistence(user_id):
 
@@ -106,18 +110,21 @@ def addRSVP(list_id, user_id, answer_id, time='NULL'):
                          # passwd="megajonhy",  # your password
                          db="rsvptime_bot",  # name of the data base
                          charset='utf8')  # overwrites default charset
-
     cur = db.cursor()
-    #TODO time functionality
 
-    print "addRSVP: list_id",list_id,";user_id:",user_id,";answer_id:",answer_id,"time:",time
-    sql = "INSERT INTO rsvp (time, list_id, user_id, answer_id) VALUES ({}, '{}', '{}', '{}')".format(
-        time, list_id, user_id, answer_id)
+    print "addRSVP: list_id",list_id,";user_id:",user_id,";answer_id:",answer_id,";time:",time
+    if time == 'NULL':
+        sql = "INSERT INTO rsvp (time, list_id, user_id, answer_id) VALUES ({}, '{}', '{}', '{}')".format(
+            time, list_id, user_id, answer_id)
+    else:
+        sql = "INSERT INTO rsvp (time, list_id, user_id, answer_id) VALUES ('{}', '{}', '{}', '{}')".format(
+            time, list_id, user_id, answer_id)
     print sql
     cur.execute(sql)
     db.commit()
     cur.close()
     db.close()
+
 
 def updateRSVP(list_id, user_id, answer_id, time='NULL'):
 
@@ -131,7 +138,12 @@ def updateRSVP(list_id, user_id, answer_id, time='NULL'):
     # TODO time functionality
 
     print "updateRSVP: list_id", list_id, ";user_id:", user_id, ";answer_id:", answer_id, "time:", time
-    sql = "UPDATE rsvp SET time = {}, answer_id = '{}' WHERE list_id = '{}' and user_id = '{}'".format(time,answer_id,list_id,user_id)
+    if time == 'NULL':
+        sql = "UPDATE rsvp SET time = {}, answer_id = '{}' WHERE list_id = '{}' and user_id = '{}'".format(
+            time,answer_id,list_id,user_id)
+    else:
+        sql = "UPDATE rsvp SET time = '{}', answer_id = '{}' WHERE list_id = '{}' and user_id = '{}'".format(
+            time, answer_id, list_id, user_id)
     print sql
     cur.execute(sql)
     db.commit()
