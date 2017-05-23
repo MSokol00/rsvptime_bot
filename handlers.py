@@ -34,15 +34,21 @@ def buildListText(list, status):
     will_attend = u''
     wont_attend = u''
     tent = u''
+    time_last = None
+    time_text = u''
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
         # time -----------------------------------------
         if tuple[4] != 'NULL' and tuple[4] is not None:
             print "line 40: tuple[4]:", tuple[4]
             time = (datetime.datetime.min + tuple[4]).time()
-            print type(time)
-            time_str = u" "+u"\u231A"+u" {:%H:%M}".format(time)
+            time_str = u" "+u"\u231A"+u"{:%H:%M}".format(time)
             print "line 44: time_str:", time_str
+            if time_last is None:
+                time_last = time
+            else:
+                if time < time_last:
+                    time_last = time
         else:
             time_str = ""
         # time -----------------------------------------
@@ -61,7 +67,9 @@ def buildListText(list, status):
     if will_attend.replace(" ", "") != "": will_attend += u'\n'
     if wont_attend.replace(" ", "") != "": wont_attend += u'\n'
     if tent.replace(" ", ""): tent += u'\n'
-    text = title + will_attend + tent + wont_attend
+    if time_last is not None:
+        time_text = u'\n The last attendee will arrive at {:%H:%M}.'.format(time_last)
+    text = title + will_attend + tent + wont_attend + time_text
     return text
 
 
@@ -189,7 +197,6 @@ def tentative(bot, update, args):
 
 
 def list(bot, update):
-    #TODO time
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
     if exists == True:

@@ -135,7 +135,6 @@ def updateRSVP(list_id, user_id, answer_id, time='NULL'):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    # TODO time functionality
 
     print "updateRSVP: list_id", list_id, ";user_id:", user_id, ";answer_id:", answer_id, "time:", time
     if time == 'NULL':
