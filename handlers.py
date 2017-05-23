@@ -36,12 +36,16 @@ def buildListText(list, status):
     tent = u''
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
+        # time -----------------------------------------
         if tuple[4] != 'NULL' and tuple[4] is not None:
+            print "line 40: tuple[4]:", tuple[4]
             time = stringToTime(tuple[4])
+            print "line 42: time:", time
             time_str = u" \u231A {:%H:%M}".format(time)
+            print "line 44: time_str:", time_str
         else:
             time_str = ""
-
+        # time -----------------------------------------
         if int(tuple[0]) == 1:
             will_attend = will_attend + unicode(str(wi_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
                 2] + time_str + u'\n'
