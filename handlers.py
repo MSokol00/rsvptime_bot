@@ -21,7 +21,7 @@ def emojiAnswer(answer_id):
     return emoji[answer]
 
 
-def buildListText(list, status): #TODO time bijacz
+def buildListText(list, status):
     if status == 'open':
         title = u"On the list for '{}': \n \n".format(list['listName'])
     elif status == 'close':
@@ -133,12 +133,8 @@ def willattend(bot, update, args):
         print args[0]
 
         if re.match("[0-9]{2}:[0-9]{2}", args[0]) :
-
-            try:
-                time = stringToTime(args[0])
-                time_bool = True
-                print time
-            except:
+            time = stringToTime(args[0])
+            if time is None:
                 text_time = u"Nice try with time :)"
                 print text_time
         else:
