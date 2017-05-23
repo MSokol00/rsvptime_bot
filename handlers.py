@@ -68,7 +68,7 @@ def buildListText(list, status):
     if wont_attend.replace(" ", "") != "": wont_attend += u'\n'
     if tent.replace(" ", ""): tent += u'\n'
     if time_last is not None:
-        time_text = u'\n The last attendee will arrive at {:%H:%M}.'.format(time_last)
+        time_text = u'The last attendee will arrive at {:%H:%M}.'.format(time_last)
     text = title + will_attend + tent + wont_attend + time_text
     return text
 
