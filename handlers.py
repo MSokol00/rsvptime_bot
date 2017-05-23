@@ -39,9 +39,9 @@ def buildListText(list, status):
         # time -----------------------------------------
         if tuple[4] != 'NULL' and tuple[4] is not None:
             print "line 40: tuple[4]:", tuple[4]
-            time = tuple[4]
+            time = (datetime.datetime.min + tuple[4]).time()
             print type(time)
-            time_str = u" "+u"\u231A"+u" {}".format(time)
+            time_str = u" "+u"\u231A"+u" {:%H:%M}".format(time)
             print "line 44: time_str:", time_str
         else:
             time_str = ""
