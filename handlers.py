@@ -36,7 +36,7 @@ def buildListText(list, status):
     tent = u''
     for tuple in list['users']:
         emoji = emojiAnswer(tuple[0])
-        if tuple[4] not in ['NULL', 'None'] and tuple[4] is not None:
+        if tuple[4] != 'NULL' and tuple[4] is not None:
             time = stringToTime(tuple[4])
             time_str = u" \u231A {:%H:%M}".format(time)
         else:
@@ -126,7 +126,6 @@ def close(bot, update):
 def willattend(bot, update, args):
 
     # time section -----------------------------------------
-    time_bool = False
     text_time = u''
     time = None
     if len(args) != 0:
@@ -146,7 +145,7 @@ def willattend(bot, update, args):
     if exists == True:
         user = makeUserDic(update)
         mysql.attend(chat_id, user, answer='will', time=time)
-        if time_bool:
+        if time is not None:
             text = u"{} {} will attend at {:%H:%M}!".format(user['first_name'], user['last_name'], time)
         else:
             text = u"{} {} will attend!".format(user['first_name'], user['last_name'])+u" "+text_time
