@@ -68,7 +68,9 @@ def buildListText(list, status):
 def stringToTime(string):
     try:
         time_obj = re.split(":", string)
-        time= datetime.time(int(time_obj[0]), int(time_obj[1]), 00)
+        print "time_obj in stringToTime:", time_obj
+        time = datetime.time(int(time_obj[0]), int(time_obj[1]), 00)
+        print "time in stringToTime:", time
     except:
         time = None
     return time
@@ -146,7 +148,7 @@ def willattend(bot, update, args):
     # /time section ----------------------------------------
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
-    if exists == True:
+    if exists:
         user = makeUserDic(update)
         mysql.attend(chat_id, user, answer='will', time=time)
         if time is not None:
