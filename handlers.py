@@ -27,9 +27,9 @@ def buildListText(list, status):
     elif status == 'close':
         title = u"List '{}' closed! Final results: \n \n".format(list['listName'])
     print list
-    wi_i = 1
-    wo_i = 1
-    t_i = 1
+    wi_i = 0
+    wo_i = 0
+    t_i = 0
 
     will_attend = u''
     wont_attend = u''
@@ -53,17 +53,17 @@ def buildListText(list, status):
             time_str = ""
         # time -----------------------------------------
         if int(tuple[0]) == 1:
+            wi_i += 1
             will_attend = will_attend + unicode(str(wi_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
                 2] + time_str + u'\n'
-            wi_i += 1
         elif int(tuple[0]) == 2:
+            wo_i += 1
             wont_attend = wont_attend + unicode(str(wo_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
                 2] + time_str + u'\n'
-            wo_i += 1
         elif int(tuple[0]) == 3:
+            t_i += 1
             tent = tent + unicode(str(t_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
                 2] + time_str + u'\n'
-            t_i += 1
     summary_list = []
     if will_attend.replace(" ", "") != "":
         will_attend += u'\n'
