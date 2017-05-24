@@ -64,12 +64,24 @@ def buildListText(list, status):
             tent = tent + unicode(str(t_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
                 2] + time_str + u'\n'
             t_i += 1
-    if will_attend.replace(" ", "") != "": will_attend += u'\n'
-    if wont_attend.replace(" ", "") != "": wont_attend += u'\n'
-    if tent.replace(" ", ""): tent += u'\n'
+    summary_list = []
+    if will_attend.replace(" ", "") != "":
+        will_attend += u'\n'
+        summary_list.append(u'{0} will attend'.format(unicode(str(wi_i))))
+    if wont_attend.replace(" ", "") != "":
+        wont_attend += u'\n'
+        summary_list.append(u'{0} wont attend'.format(unicode(str(wo_i))))
+    if tent.replace(" ", "") != "":
+        tent += u'\n'
+        summary_list.append(u'{0} is tentative'.format(unicode(str(t_i))))
+
+    summary_str = u''
+    if len(summary_list) > 0:
+        summary_str = u'{0}. \n \n'.format(u', '.join(summary_list))
     if time_last is not None:
         time_text = u'The last attendee will arrive at {:%H:%M}.'.format(time_last)
-    text = title + will_attend + tent + wont_attend + time_text
+
+    text = title + summary_str + will_attend + tent + wont_attend + time_text
     return text
 
 
