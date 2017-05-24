@@ -27,9 +27,9 @@ def buildListText(list, status):
     elif status == 'close':
         title = u"List '{}' closed! Final results: \n \n".format(list['listName'])
     print list
-    wi_i = 1
-    wo_i = 1
-    t_i = 1
+    wi_i = 0
+    wo_i = 0
+    t_i = 0
 
     will_attend = u''
     wont_attend = u''
@@ -53,23 +53,35 @@ def buildListText(list, status):
             time_str = ""
         # time -----------------------------------------
         if int(tuple[0]) == 1:
+            wi_i += 1
             will_attend = will_attend + unicode(str(wi_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
                 2] + time_str + u'\n'
-            wi_i += 1
         elif int(tuple[0]) == 2:
+            wo_i += 1
             wont_attend = wont_attend + unicode(str(wo_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
                 2] + time_str + u'\n'
-            wo_i += 1
         elif int(tuple[0]) == 3:
+            t_i += 1
             tent = tent + unicode(str(t_i)) + u'.' + emoji + u' ' + tuple[1] + u' ' + tuple[
                 2] + time_str + u'\n'
-            t_i += 1
-    if will_attend.replace(" ", "") != "": will_attend += u'\n'
-    if wont_attend.replace(" ", "") != "": wont_attend += u'\n'
-    if tent.replace(" ", ""): tent += u'\n'
+    summary_list = []
+    if will_attend.replace(" ", "") != "":
+        will_attend += u'\n'
+        summary_list.append(u'{0} will attend'.format(unicode(str(wi_i))))
+    if wont_attend.replace(" ", "") != "":
+        wont_attend += u'\n'
+        summary_list.append(u'{0} wont attend'.format(unicode(str(wo_i))))
+    if tent.replace(" ", "") != "":
+        tent += u'\n'
+        summary_list.append(u'{0} is tentative'.format(unicode(str(t_i))))
+
+    summary_str = u''
+    if len(summary_list) > 0:
+        summary_str = u'{0}. \n \n'.format(u', '.join(summary_list))
     if time_last is not None:
         time_text = u'The last attendee will arrive at {:%H:%M}.'.format(time_last)
-    text = title + will_attend + tent + wont_attend + time_text
+
+    text = title + summary_str + will_attend + tent + wont_attend + time_text
     return text
 
 
@@ -125,10 +137,11 @@ def make(bot, update, args):
 def close(bot, update):
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
-    if exists == True:
+    if exists:
+        list = mysql.getListRSVP(chat_id)
+        text = buildListText(list, 'close')
         mysql.close_list(chat_id)
         print "list closed"
-        text = "List closed succesfully!"
     else:
         text = "There is no list to close! You have to first create one with /make"
 
