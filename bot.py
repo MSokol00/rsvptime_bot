@@ -1,7 +1,7 @@
 # resources
 import getopt
 import sys
-import xml.etree.ElementTree as ET
+from xml.etree.ElementTree import parse
 
 from telegram.ext import Updater, CommandHandler
 
@@ -29,7 +29,7 @@ if len(argv) > 0:
 
 
 # token import
-config = ET.parse('config.xml')
+config = parse('config.xml')
 if test_mode is True:
     token = config.findtext('beta')
 else:
@@ -54,13 +54,13 @@ dispatcher.add_handler(close_handler)
 willattend_handler = CommandHandler('willattend', handlers.willattend, pass_args=True)
 dispatcher.add_handler(willattend_handler)
 
-wontattend_handler = CommandHandler('wontattend', handlers.wontattend, pass_args=True)
+wontattend_handler = CommandHandler('wontattend', handlers.wontattend, pass_args=False)
 dispatcher.add_handler(wontattend_handler)
 
-tentative_handler = CommandHandler('tentative', handlers.tentative, pass_args=True)
+tentative_handler = CommandHandler('tentative', handlers.tentative, pass_args=False)
 dispatcher.add_handler(tentative_handler)
 
-list_handler = CommandHandler('list', handlers.list)
+list_handler = CommandHandler('list', handlers.showlist)
 dispatcher.add_handler(list_handler)
 
 # init

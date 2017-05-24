@@ -1,9 +1,9 @@
 #!/usr/bin/python
+# noinspection PyUnresolvedReferences
 import MySQLdb
 
 
 def getListId(chat_id):
-
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -11,7 +11,7 @@ def getListId(chat_id):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    sql = "SELECT id FROM lists WHERE chat_id = %s" % (chat_id)
+    sql = u"SELECT id FROM lists WHERE chat_id = {0:s}".format(chat_id)
     cur.execute(sql)
     list_id = cur.fetchone()
     if list_id is not None:
@@ -22,7 +22,6 @@ def getListId(chat_id):
 
 
 def getListName(chat_id):
-
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -30,7 +29,7 @@ def getListName(chat_id):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    sql = "SELECT name FROM lists WHERE chat_id = %s" % (chat_id)
+    sql = u"SELECT name FROM lists WHERE chat_id = {0:s}".format(chat_id)
     cur.execute(sql)
     list_name_cur = cur.fetchone()
     list_name = u''.join(list_name_cur[0])
@@ -40,7 +39,6 @@ def getListName(chat_id):
 
 
 def getAttendees(list_id):
-
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -68,7 +66,6 @@ def checkListExistence(chat_id):
 
 
 def checkUserExistence(user_id):
-
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -76,7 +73,7 @@ def checkUserExistence(user_id):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    sql = "SELECT user_id FROM users WHERE user_id = '%s'" % (user_id)
+    sql = u"SELECT user_id FROM users WHERE user_id = '{0:s}'".format(user_id)
     cur.execute(sql)
     result = cur.fetchone()
     if result is not None:
@@ -87,8 +84,8 @@ def checkUserExistence(user_id):
     db.close()
     return exist
 
-def addUser(user):
 
+def addUser(user):
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -103,8 +100,8 @@ def addUser(user):
     cur.close()
     db.close()
 
-def addRSVP(list_id, user_id, answer_id, time='NULL'):
 
+def addRSVP(list_id, user_id, answer_id, time='NULL'):
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -112,7 +109,7 @@ def addRSVP(list_id, user_id, answer_id, time='NULL'):
                          charset='utf8')  # overwrites default charset
     cur = db.cursor()
 
-    print "addRSVP: list_id",list_id,";user_id:",user_id,";answer_id:",answer_id,";time:",time
+    print "addRSVP: list_id", list_id, ";user_id:", user_id, ";answer_id:", answer_id, ";time:", time
     if time == 'NULL':
         sql = "INSERT INTO rsvp (time, list_id, user_id, answer_id) VALUES ({}, '{}', '{}', '{}')".format(
             time, list_id, user_id, answer_id)
@@ -127,7 +124,6 @@ def addRSVP(list_id, user_id, answer_id, time='NULL'):
 
 
 def updateRSVP(list_id, user_id, answer_id, time='NULL'):
-
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -139,7 +135,7 @@ def updateRSVP(list_id, user_id, answer_id, time='NULL'):
     print "updateRSVP: list_id", list_id, ";user_id:", user_id, ";answer_id:", answer_id, "time:", time
     if time == 'NULL':
         sql = "UPDATE rsvp SET time = {}, answer_id = '{}' WHERE list_id = '{}' and user_id = '{}'".format(
-            time,answer_id,list_id,user_id)
+            time, answer_id, list_id, user_id)
     else:
         sql = "UPDATE rsvp SET time = '{}', answer_id = '{}' WHERE list_id = '{}' and user_id = '{}'".format(
             time, answer_id, list_id, user_id)
@@ -151,7 +147,6 @@ def updateRSVP(list_id, user_id, answer_id, time='NULL'):
 
 
 def checkRSVP(list_id, user_id, answer_id, time='NULL'):
-
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -159,8 +154,9 @@ def checkRSVP(list_id, user_id, answer_id, time='NULL'):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    if time is None: time = 'NULL'
-    sql = "SELECT answer_id, time FROM rsvp WHERE list_id = '{}' and user_id = '{}'".format(list_id,user_id)
+    if time is None:
+        time = 'NULL'
+    sql = "SELECT answer_id, time FROM rsvp WHERE list_id = '{}' and user_id = '{}'".format(list_id, user_id)
     cur.execute(sql)
     result = cur.fetchone()
     if result is None:
@@ -171,7 +167,6 @@ def checkRSVP(list_id, user_id, answer_id, time='NULL'):
 
 # make list
 def create_list(chat_id, name):
-
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -180,6 +175,7 @@ def create_list(chat_id, name):
 
     cur = db.cursor()
     sql = u"INSERT INTO lists (chat_id, name) VALUES ({}, '{}')".format(chat_id, name)
+    # noinspection PyBroadException
     try:
         cur.execute(sql)
         db.commit()
@@ -192,8 +188,8 @@ def create_list(chat_id, name):
         db.close()
         return False
 
-def close_list(chat_id):
 
+def close_list(chat_id):
     db = MySQLdb.connect(host="localhost",  # your host, usually localhost
                          user="root",  # your username
                          # passwd="megajonhy",  # your password
@@ -208,9 +204,10 @@ def close_list(chat_id):
     cur.close()
     db.close()
 
+
 def attend(chat_id, user, answer, time='NULL'):
     list_id = getListId(chat_id)
-    if checkUserExistence(user['user_id']) == False:
+    if not checkUserExistence(user['user_id']):
         addUser(user)
     answer_ids = {
         'will': 1,
@@ -221,16 +218,13 @@ def attend(chat_id, user, answer, time='NULL'):
     answer_id = answer_ids.get(answer)
     checkRSVP(list_id=list_id, user_id=user['user_id'], answer_id=answer_id, time=time)
 
+
 def getListRSVP(chat_id):
     list_id = getListId(chat_id)
-    listName = getListName(chat_id)
+    list_name = getListName(chat_id)
     attendees = getAttendees(list_id)
-    list = {
-        'listName': listName,
+    list_obj = {
+        'listName': list_name,
         'users': attendees
     }
-    return list
-
-
-
-
+    return list_obj
