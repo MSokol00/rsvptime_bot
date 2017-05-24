@@ -140,7 +140,7 @@ def close(bot, update):
     if exists == True:
         mysql.close_list(chat_id)
         print "list closed"
-        text = "List closed succesfully!"
+        text = buildListText('close')
     else:
         text = "There is no list to close! You have to first create one with /make"
 
