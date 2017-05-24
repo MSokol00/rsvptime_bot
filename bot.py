@@ -1,11 +1,41 @@
 # resources
+import getopt
+import sys
+import xml.etree.ElementTree as ET
+
 from telegram.ext import Updater, CommandHandler
-import handlers, logging
+
+import handlers
+import logging
 
 # configs
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-updater = Updater(token="308560134:AAGxr4JKMCj-vGKdIPZKvOT51Sf8UPW837o")
+# opts handling
+test_mode = False
+argv = sys.argv[1:]
+if len(argv) > 0:
+    try:
+        opts, args = getopt.getopt(argv, "", "testing")
+    except getopt.GetoptError as err:
+        print err
+        sys.exit(2)
+
+    for o, a in opts:
+        if o == '--testing':
+            test_mode = True
+        else:
+            assert False, "unhandled option"
+
+
+# token import
+config = ET.parse('config.xml')
+if test_mode is True:
+    token = config.findtext('beta')
+else:
+    token = config.findtext('released')
+
+updater = Updater(token=token)
 dispatcher = updater.dispatcher
 
 # command handlers
