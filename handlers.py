@@ -137,10 +137,11 @@ def make(bot, update, args):
 def close(bot, update):
     chat_id = update.message.chat_id
     exists = mysql.checkListExistence(chat_id)
-    if exists == True:
+    if exists:
+        list = mysql.getListRSVP(chat_id)
+        text = buildListText(list, 'close')
         mysql.close_list(chat_id)
         print "list closed"
-        text = buildListText('close')
     else:
         text = "There is no list to close! You have to first create one with /make"
 
