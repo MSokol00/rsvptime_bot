@@ -126,7 +126,7 @@ def make(bot, update, args):
         if name.replace(" ", "") != "":
             result = mysql.create_list(chat_id, name)
             if result:
-                text = u"List {0:s} has been created successfully!".format(name)
+                text = u"List {} has been created successfully!".format(unicode(str(name)))
                 print "list created"
             else:
                 text = "Ups! Something went wrong :( Your list has not been created." "" \

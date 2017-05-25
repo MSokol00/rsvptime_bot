@@ -11,7 +11,7 @@ def getListId(chat_id):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    sql = u"SELECT id FROM lists WHERE chat_id = {0:s}".format(chat_id)
+    sql = u"SELECT id FROM lists WHERE chat_id = {}".format(unicode(str(chat_id)))
     cur.execute(sql)
     list_id = cur.fetchone()
     if list_id is not None:
@@ -29,7 +29,7 @@ def getListName(chat_id):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    sql = u"SELECT name FROM lists WHERE chat_id = {0:s}".format(chat_id)
+    sql = u"SELECT name FROM lists WHERE chat_id = {}".format(unicode(str(chat_id)))
     cur.execute(sql)
     list_name_cur = cur.fetchone()
     list_name = u''.join(list_name_cur[0])
@@ -73,7 +73,7 @@ def checkUserExistence(user_id):
                          charset='utf8')  # overwrites default charset
 
     cur = db.cursor()
-    sql = u"SELECT user_id FROM users WHERE user_id = '{0:s}'".format(user_id)
+    sql = u"SELECT user_id FROM users WHERE user_id = '{}'".format(unicode(str(user_id)))
     cur.execute(sql)
     result = cur.fetchone()
     if result is not None:
